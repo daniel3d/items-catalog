@@ -17,7 +17,7 @@ def init_app(default_config=None, default_name=None, default_blueprints=None):
     if default_blueprints is None:
         default_blueprints = blueprints
 
-    app = Flask(default_name, template_folder=config.PROJECT_TEMPLATES)
+    app = Flask(default_name)
     configure_app(app, default_config)
     configure_blueprints(app, default_blueprints)
     configure_error_handlers(app)

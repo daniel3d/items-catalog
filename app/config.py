@@ -1,12 +1,6 @@
-import os
-
 # Project details
-PROJECT = "items-catalog"
+PROJECT = "Items Catalog"
 VERSION = "0.0.1"
-
-# Paths
-PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
-PROJECT_TEMPLATES = os.path.join(PROJECT_ROOT, 'templates')
 
 # Server
 PORT = 5000
