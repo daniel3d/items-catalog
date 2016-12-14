@@ -1,0 +1,40 @@
+{% extends "layouts/auth.html" %} 
+
+{% block content %}
+<div class="auth-small auth-panel">
+    <form method="POST" action="">
+        <fieldset>
+
+            <!-- 
+            @if (count($errors) > 0)
+                <div class="alert alert-danger">
+                    <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>$error</li>
+                        @endforeach
+                    </ul>
+                </div><br>
+            @endif -->
+
+            <div class="form-group">
+                <label class="control-label" for="username">Имейл</label>
+                <input type="email" placeholder="example@gmail.com" required="" value="" name="email" class="form-control">
+            </div>
+            <div class="form-group">
+                <label class="control-label" for="password">Парола</label>
+                <input type="password" placeholder="******" required="" value="" name="password" class="form-control">
+            </div>
+            <div class="checkbox">
+              <label>
+                <input type="checkbox" class="i-checks" checked> &nbsp; Запомни ме
+              </label>
+              <a class="float-xs-right" href="">Remember me?</a>
+            </div>
+            <button class="btn btn-success btn-block">Login</button>
+            <a class="btn btn-secondary btn-block" href="">Sing Up</a>
+        
+        </fieldset>
+    </form>
+</div>
+{% endblock %}

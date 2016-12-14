@@ -1,4 +1,5 @@
 # Project details
+CREATOR = "Daniel Yovchev"
 PROJECT = "Items Catalog"
 VERSION = "0.0.1"
 

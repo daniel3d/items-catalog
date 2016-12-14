@@ -1,27 +1,5 @@
-.navbar-light .navbar-brand {
-	font-size: 33px;
-	margin-right: 2rem;
-	color: rgba(0,0,0,.5);
-	font-family: 'Yesteryear', cursive;
-}
-
-.navbar-nav .nav-link {
-	padding-top: 0.961rem;
-	padding-bottom: 0.961rem;
-}
-
-.navbar-toggler {    
-	margin-top: 7px;
-}
-
-.inverse {
-    background: #373a3c;
-}
-
-
-
-
-
+/* Boostrap Theme 
+*******************************************************************************/
 .navbar {
   margin-bottom: 0;
 }
@@ -54,11 +32,11 @@
 }
 
 .jumbotron {
-  text-align: center;
   padding-top: 6rem;
   padding-bottom: 6rem;
   margin-bottom: 0;
-  background-color: #fff;
+  border-radius: 0px;
+  color: #fff;
 }
 
 .jumbotron p:last-child {
@@ -104,3 +82,78 @@ footer {
 footer p {
   margin-bottom: .25rem;
 }
+
+
+/* General 
+*******************************************************************************/
+.navbar-light .navbar-brand {
+  font-size: 33px;
+  margin-right: 2rem;
+  color: rgba(0,0,0,.5);
+  font-family: 'Yesteryear', cursive;
+}
+
+.navbar-nav .nav-link {
+  padding-top: 0.961rem;
+  padding-bottom: 0.961rem;
+}
+
+.navbar-toggler {    
+  margin-top: 7px;
+}
+
+.inverse {
+    background: #373a3c;
+}
+
+.main-background {
+  background: url(bg.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+
+/* Auth 
+*******************************************************************************/
+body.auth {
+  color: #fff; }
+
+.auth .logo {
+  font-family: 'Yesteryear', cursive;
+  font-size: 3em;
+  margin-bottom: 5px;
+  color: #fff; }
+
+.auth .container {
+  padding-top: 6%; }
+
+.auth .auth-footer {
+  margin-top: 25px; }
+
+.auth .auth-header {
+  margin-bottom: 20px; }
+
+.auth .auth-panel {
+  background: #fff;
+  margin: auto;
+  border: 1px solid #e4e5e7;
+  border-radius: 2px;
+  padding: 20px; 
+  color: #ccc; }
+
+.auth .auth-small {
+  max-width: 430px; }
+
+.auth .auth-big {
+  max-width: 800px; }
+
+.auth .btn.btn-social.btn-facebook {
+  text-align: center; }
+
+.auth .btn.btn-social.btn-facebook span {
+  margin-left: -32px; }
+
+.auth .btn {
+  text-transform: none; }
