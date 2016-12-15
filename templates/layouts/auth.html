@@ -9,14 +9,18 @@
     
     <title>{{ config.PROJECT }}</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Yesteryear" rel="stylesheet">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Yesteryear">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.min.css">
+
+   
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
 </head>
 
 <body class="auth main-background">
 
-    <div class="container">
+    <div class="container align-middle">
         <div class="row">
             <div class="col-md-12">
                 <div class="text-xs-center auth-header">
@@ -28,7 +32,8 @@
         </div>
         <div class="row auth-footer">
             <div class="col-md-12 text-xs-center">
-                <strong>{{ config.PROJECT }}</strong> - Udacity FSWD Nanodegree <br/> created by <a href="https://github.com/daniel3d">Daniel Yovchev</a>
+                <strong>{{ config.PROJECT }}</strong> - Udacity FSWD Nanodegree 
+                <br/> created by <a href="https://github.com/daniel3d">Daniel Yovchev</a>
             </div>
         </div>
     </div>

@@ -1,3 +1,7 @@
+html {
+   height: 100%;
+}
+
 /* Boostrap Theme 
 *******************************************************************************/
 .navbar {
@@ -118,7 +122,11 @@ footer p {
 /* Auth 
 *******************************************************************************/
 body.auth {
-  color: #fff; }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff; 
+  min-height: 100%;}
 
 .auth .logo {
   font-family: 'Yesteryear', cursive;
@@ -127,7 +135,7 @@ body.auth {
   color: #fff; }
 
 .auth .container {
-  padding-top: 6%; }
+ }
 
 .auth .auth-footer {
   margin-top: 25px; }
@@ -149,11 +157,12 @@ body.auth {
 .auth .auth-big {
   max-width: 800px; }
 
-.auth .btn.btn-social.btn-facebook {
-  text-align: center; }
+.auth .auth-panel .btn-social {
+  text-align: center;
+  color: #fff !important;
+}
 
-.auth .btn.btn-social.btn-facebook span {
-  margin-left: -32px; }
-
-.auth .btn {
-  text-transform: none; }
+.auth .auth-panel .btn-social>:first-child {
+  line-height: 38px;
+  font-size: 1.3em;
+}
