@@ -8,4 +8,4 @@ restaurants = Blueprint('restaurants', __name__)
 @restaurants.route('/restaurants')
 def restaurant():
 	#return current_app.template_folder
-	return render_template('restaurants.html', name=current_app.name)
+	return render_template('restaurants.html')

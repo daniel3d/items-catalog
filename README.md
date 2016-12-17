@@ -4,8 +4,10 @@
 
 #### Installation instructions
 
- * Install Flask `pip install Flask`
+ * Install python requirments `pip install -t lib -r requirements.txt`
  * To start the flask app run `python serve.py`
+
+* https://github.com/pallets/flask/wiki/Large-app-how-to
 
 ### Stuff used to make this:
 
