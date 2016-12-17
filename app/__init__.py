@@ -2,16 +2,14 @@ import os
 import sys
 import inspect
 
+from app.database import db
 from flask import Flask, Blueprint
-from flask_sqlalchemy import SQLAlchemy
-
-db = None
-app = None
 
 def log(message):
     """Use logger so we don't print multiple times when reload is on."""
     if not os.environ.get('WERKZEUG_RUN_MAIN'):
         print message
+
 
 def create_app(default_config=None, default_blueprints=None):
     """Create a Flask app."""
@@ -24,8 +22,9 @@ def create_app(default_config=None, default_blueprints=None):
 
     def configure_database():
         """Set up the database."""
-        db = SQLAlchemy(app)
-        db.create_all()
+        db.init_app(app)
+        with app.test_request_context():
+            db.create_all()
         log(" * Init database: `%s`" % app.config['SQLALCHEMY_DATABASE_URI'])
 
     def configure_blueprints():
