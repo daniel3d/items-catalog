@@ -1,5 +1,5 @@
 from app.database import db
-from app.users.models import User
+from app.auth.models import User
 from flask import Blueprint, url_for, redirect, jsonify, make_response
 
 users = Blueprint('api.users', __name__, url_prefix='/api/users')

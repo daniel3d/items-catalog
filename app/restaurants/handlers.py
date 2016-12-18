@@ -6,6 +6,6 @@ restaurants = Blueprint('restaurants', __name__)
 
 @restaurants.route('/')
 @restaurants.route('/restaurants')
-def restaurant():
+def index():
 	#return current_app.template_folder
 	return render_template('restaurants.html')
