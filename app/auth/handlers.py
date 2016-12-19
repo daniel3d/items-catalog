@@ -1,7 +1,7 @@
 from app.database import db
 from app.auth.forms import RegisterForm, LoginForm
 from app.auth.models import User
-from app.auth.decorators import requires_login
+from app.auth.decorators import requires_login, already_login
 from werkzeug import check_password_hash, generate_password_hash
 from flask import Blueprint, request, render_template, flash, g, session, \
     redirect, url_for
@@ -9,8 +9,8 @@ from flask import Blueprint, request, render_template, flash, g, session, \
 auth = Blueprint('auth', __name__, url_prefix='/auth')
 
 
-@requires_login
 @auth.route('/me/')
+@requires_login
 def home():
     return render_template("auth/profile.html", user=g.user)
 
@@ -24,6 +24,7 @@ def before_request():
 
 
 @auth.route('/login/', methods=['GET', 'POST'])
+@already_login
 def login():
     """Login form."""
     form = LoginForm(request.form)
@@ -35,19 +36,20 @@ def login():
             # the session can't be modified as it's signed,
             # it's a safe place to store the user id
             session['user_id'] = user.id
-            flash('Welcome %s' % user.username)
+            flash('Welcome back %s!' % user.name, 'alert-success')
             return redirect(url_for('restaurants.index'))
-        flash('Wrong email or password', 'error-message')
+        flash('Wrong email or password', 'alert-danger')
     return render_template("auth/login.html", form=form)
 
 
 @auth.route('/signup/', methods=['GET', 'POST'])
+@already_login
 def signup():
     """Registration Form."""
     form = RegisterForm(request.form)
     if form.validate_on_submit():
         # create an user instance not yet stored in the database
-        user = User(username=form.username.data, email=form.email.data,
+        user = User(name=form.name.data, email=form.email.data,
                     password=generate_password_hash(form.password.data))
         # Insert the record in our database and commit it
         db.session.add(user)
@@ -55,7 +57,7 @@ def signup():
         # Log the user in, as he now has an id
         session['user_id'] = user.id
         # flash will display a message to the user
-        flash('Thanks for registering')
+        flash('Thanks you for registering %s!' % user.name, 'alert-success')
         # redirect user to the 'home' method of the user module.
         return redirect(url_for('restaurants.index'))
     return render_template("auth/signup.html", form=form)

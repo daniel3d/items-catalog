@@ -2,39 +2,16 @@
 
 {% block content %}
 <div class="auth-small auth-panel">
-    <form method="POST" action="">
+    {% from "forms/macros.html" import render_field %}
+    <form method="POST" action="{{ url_for('auth.login') }}">
         <fieldset>
+            {% for category, msg in get_flashed_messages(with_categories=true) %}
+                <div class="alert {{ category }}">{{ msg }}</div>
+            {% endfor %}
 
-            <!-- 
-            <div class="alert alert-danger">
-                <strong>Whoops!</strong> There were some problem.<br><br>
-                <ul>
-                    <li>$error</li>
-                    <li>$error</li>
-                    <li>$error</li>
-                    <li>$error</li>
-                </ul>
-            </div>
-
-            @if (count($errors) > 0)
-                <div class="alert alert-danger">
-                    <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>$error</li>
-                        @endforeach
-                    </ul>
-                </div><br>
-            @endif -->
-
-            <div class="form-group">
-                <label class="control-label" for="username">Email</label>
-                <input type="email" placeholder="example@gmail.com" required="" value="" name="email" class="form-control">
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="password">Password</label>
-                <input type="password" placeholder="***********" required="" value="" name="password" class="form-control">
-            </div>
+            {{ form.csrf_token }}
+            {{ render_field(form.email, placeholder="example@gmail.com") }}
+            {{ render_field(form.password, placeholder="***********") }}
             <div class="checkbox">
               <label>
                 <input type="checkbox" class="i-checks" checked> &nbsp; Remember me
@@ -51,8 +28,7 @@
             <a class="btn btn-block btn-social btn-github">
                 <span class="fa fa-github"></span> Sign in with GitHub
             </a>
-            <a class="btn btn-secondary btn-block" href="">Sing in</a>
-        
+            <a class="btn btn-secondary btn-block" href="{{ url_for('auth.signup') }}">New here? Sign Up</a>
         </fieldset>
     </form>
 </div>

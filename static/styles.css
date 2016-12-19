@@ -31,8 +31,15 @@ html {
   font-weight: 500;
   color: #eceeef;
 }
+
 .social a:hover {
   color: #fff;
+}
+
+.alert {
+  margin-bottom: 0px;
+  border-radius: 0px;
+  text-align: center;
 }
 
 .jumbotron {
@@ -41,6 +48,12 @@ html {
   margin-bottom: 0;
   border-radius: 0px;
   color: #fff;
+}
+
+.jumbotron .single.btn-lg {
+    padding: 0.9rem 7rem;
+    font-size: 1.1rem;
+    border-radius: .3rem;
 }
 
 .jumbotron p:last-child {
@@ -59,7 +72,7 @@ html {
   min-height: 50rem; /* Can be removed; just added for demo purposes */
   padding-top: 3rem;
   padding-bottom: 3rem;
-  background-color: #f7f7f7;
+  background-color: #fff;
 }
 
 .card {
@@ -81,6 +94,7 @@ html {
 footer {
   padding-top: 3rem;
   padding-bottom: 3rem;
+  background-color: #f7f7f9;
 }
 
 footer p {

@@ -1,12 +1,14 @@
 {% macro render_field(field) %}
-    <div class="form_field">
-    {{ field.label(class="label") }}
+    <div class="form-group {% if field.errors %}has-danger{% endif %}">
+    {{ field.label(class="form-control-label") }}
     {% if field.errors %}
-        {% set css_class = 'has_error ' + kwargs.pop('class', '') %}
+        {% set css_class = 'form-control form-control-danger' + kwargs.pop('class', '') %}
         {{ field(class=css_class, **kwargs) }}
-        <ul class="errors">{% for error in field.errors %}<li>{{ error|e }}</li>{% endfor %}</ul>
+        {% for error in field.errors %}
+            <div class="form-control-feedback">{{ error|e }}</div>
+        {% endfor %}
     {% else %}
-        {{ field(**kwargs) }}
+        {{ field(class='form-control ' + kwargs.pop('class', ''), **kwargs) }}
     {% endif %}
     </div>
 {% endmacro %}
