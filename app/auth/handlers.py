@@ -23,7 +23,7 @@ def before_request():
         g.user = User.query.get(session['user_id'])
 
 
-@auth.route('/login/', methods=['GET', 'POST'])
+@auth.route('/login', methods=['GET', 'POST'])
 @already_login
 def login():
     """Login form."""
@@ -42,7 +42,7 @@ def login():
     return render_template("auth/login.html", form=form)
 
 
-@auth.route('/signup/', methods=['GET', 'POST'])
+@auth.route('/signup', methods=['GET', 'POST'])
 @already_login
 def signup():
     """Registration Form."""
@@ -61,3 +61,11 @@ def signup():
         # redirect user to the 'home' method of the user module.
         return redirect(url_for('restaurants.index'))
     return render_template("auth/signup.html", form=form)
+
+
+@auth.route('/logout', methods=['GET', 'POST'])
+def logout():
+    # remove the username from the session if it's there
+    g.user = None
+    session.pop('user_id', None)
+    return redirect(url_for('restaurants.index'))
