@@ -14,3 +14,15 @@ SECRET_KEY = "secret key"
 # Database
 SQLALCHEMY_DATABASE_URI = "sqlite:///database.db"
 SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+# Oauth credentials
+OAUTH_CREDENTIALS = {
+	'facebook': {
+		'id': '',
+		'secret': ''
+	},
+	'twitter': {
+		'id': '',
+		'secret': ''
+	}
+}

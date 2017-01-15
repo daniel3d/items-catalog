@@ -13,6 +13,18 @@ config.HOST = "0.0.0.0"
 # Make sure we update this key in production.
 config.SECRET_KEY = "base64:VWRhY2l0eSBGdWxsIFN0YWNrIFdlYiBEZXZlbG9wZXIgTmFub2RlZ3JlZQ=="
 
+# Set the oauth credentials.
+config.OAUTH_CREDENTIALS = {
+	'facebook': {
+		'id': '',
+		'secret': ''
+	},
+	'twitter': {
+		'id': '',
+		'secret': ''
+	}
+}
+
 if __name__ == '__main__':
     # Start the app if we are running this from terminal.
     create_app(config).run(host=config.HOST,
