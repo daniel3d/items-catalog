@@ -1,24 +1,19 @@
 from app.database import db
+from flask_login import UserMixin
 
+class User(UserMixin, db.Model):
+    """Registered user capable of viewing and editing.
+    
+    :param str name: name of the user
+    :param str email: email address of user
+    :param str password: encrypted password for the user
 
-class User(db.Model):
+    """
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), unique=True)
-    email = db.Column(db.String(120), unique=True)
-    password = db.Column(db.String(120))
-
-    def __init__(self, name=None, email=None, password=None):
-        self.name = name
-        self.email = email
-        self.password = password
-
-    @property
-    def serialize(self):
-        """Return object data in easily serializeable format"""
-        return {
-            'id': self.id,
-            'name': self.name,
-            'email': self.email
-        }
+    name = db.Column(db.String(64), unique=True)
+    email = db.Column(db.String(64), unique=True)
+    password = db.Column(db.String, nullable=True)
+    username = db.Column(db.String(64), nullable=True)
+    social_id = db.Column(db.String(64), nullable=True, unique=True)

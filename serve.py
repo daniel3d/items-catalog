@@ -16,8 +16,8 @@ config.SECRET_KEY = "base64:VWRhY2l0eSBGdWxsIFN0YWNrIFdlYiBEZXZlbG9wZXIgTmFub2Rl
 # Set the oauth credentials.
 config.OAUTH_CREDENTIALS = {
 	'facebook': {
-		'id': '',
-		'secret': ''
+		'id': '355967214785654',
+		'secret': 'b82dd562d20668c95dc822ce6a1b55d6'
 	},
 	'twitter': {
 		'id': '',

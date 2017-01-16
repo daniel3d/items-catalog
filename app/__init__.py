@@ -3,6 +3,7 @@ import sys
 import inspect
 
 from app.database import db
+from app.login_manager import login_manager
 from flask import Flask, Blueprint
 
 def log(message):
@@ -15,9 +16,10 @@ def create_app(default_config=None, default_blueprints=None):
     """Create a Flask app."""
 
     def configure_app():
-        """Load the curent config."""
+        """Set up the app."""
         app.version = default_config.VERSION
         app.config.from_object(default_config)
+        login_manager.init_app(app)
         log(" * Configuring app: `%s` version: %s" % (app.name, app.version))
 
     def configure_database():

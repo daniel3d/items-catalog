@@ -19,14 +19,14 @@
               <a class="float-xs-right" href="">Forgotten password?</a>
             </div>
             <button class="btn btn-success btn-block">Log in</button>
-            <a class="btn btn-block btn-social btn-facebook">
+            <a href="{{ url_for('auth.oauth_authorize', provider='facebook') }}" class="btn btn-block btn-social btn-facebook">
                 <span class="fa fa-facebook"></span> Sign in with Facebook
             </a>
-            <a class="btn btn-block btn-social btn-google">
-                <span class="fa fa-google"></span> Sign in with Google
+            <a href="{{ url_for('auth.oauth_authorize', provider='twitter') }}" class="btn btn-block btn-social btn-twitter">
+                <span class="fa fa-twitter"></span> Sign in with Twitter
             </a>
-            <a class="btn btn-block btn-social btn-github">
-                <span class="fa fa-github"></span> Sign in with GitHub
+            <a href="{{ url_for('auth.oauth_authorize', provider='google') }}" class="btn btn-block btn-social btn-google">
+                <span class="fa fa-google"></span> Sign in with Google
             </a>
             <a class="btn btn-secondary btn-block" href="{{ url_for('auth.signup') }}">New here? Sign up</a>
         </fieldset>
