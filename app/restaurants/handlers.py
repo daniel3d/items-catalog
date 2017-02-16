@@ -1,4 +1,5 @@
 from app.auth.models import User
+from app.auth.decorators import requires_login
 from flask import Blueprint, g, render_template, current_app, request, flash, \
     url_for, redirect, session
 
@@ -14,5 +15,12 @@ def before_request():
 @restaurants.route('/')
 @restaurants.route('/restaurants')
 def index():
-	#return current_app.template_folder
+	#show full list of resturants.
 	return render_template('restaurants.html')
+
+
+@restaurants.route('/restaurants/create')
+@requires_login
+def create():
+	#create new restorant form.
+	return render_template('restaurants/create.html')

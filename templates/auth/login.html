@@ -6,7 +6,9 @@
     <form method="POST" action="{{ url_for('auth.login') }}">
         <fieldset>
             {% for category, msg in get_flashed_messages(with_categories=true) %}
-                <div class="alert {{ category }}">{{ msg }}</div>
+                <div class="alert {{ category }}" style="margin-bottom: 20px;">
+                    {{ msg }}
+                </div>
             {% endfor %}
 
             {{ form.csrf_token }}

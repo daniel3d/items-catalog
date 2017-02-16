@@ -82,7 +82,7 @@ html {
 
 .album {
   min-height: 50rem; /* Can be removed; just added for demo purposes */
-  padding-top: 3rem;
+  padding-top: 1rem;
   padding-bottom: 3rem;
   background-color: #fff;
 }
@@ -123,6 +123,10 @@ footer .logo {
 
 /* General 
 *******************************************************************************/
+img {
+  width: 100%;
+}
+
 .navbar-light .navbar-brand {
   font-size: 33px;
   margin-right: 2rem;
@@ -150,6 +154,9 @@ footer .logo {
   background-size: cover;
 }
 
+.task-bar{
+  padding-top: 50px;
+}
 
 /* Auth 
 *******************************************************************************/
@@ -208,3 +215,4 @@ body.auth {
   line-height: 38px;
   font-size: 1.3em;
 }
+

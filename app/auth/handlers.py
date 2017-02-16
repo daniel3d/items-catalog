@@ -11,7 +11,7 @@ from flask import Blueprint, request, render_template, flash, g, session, \
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
 
-login_manager.view = 'login'
+login_manager.view = 'auth.login'
 
 @login_manager.user_loader
 def load_user(user_id):

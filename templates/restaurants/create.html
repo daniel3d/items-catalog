@@ -1,0 +1,59 @@
+{% extends "layouts/main.html" %} 
+
+{% block content %}
+
+	<div class="container">
+
+		<form>
+
+		<fieldset class="form-group">
+			<legend>New restorant information</legend>
+		  <div class="form-group">
+		    <label for="exampleInputEmail1">Image Url</label>
+		    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="https://c1.staticflickr.com/3/2923/14713909026_8a818d6c23_k.jpg">
+		  </div>
+		  <div class="form-group">
+		    <label for="exampleInputEmail1">Name</label>
+		    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Someting like McDonald's">
+		  </div>
+		  <div class="form-group">
+		    <label for="exampleTextarea">Description</label>
+		    <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+		  </div>
+		</fieldset>
+
+		  <fieldset class="form-group">
+		    <legend>Privacy information</legend>
+		    <div class="form-check">
+		      <label class="form-check-label">
+		        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+		        Option one is this and that&mdash;be sure to include why it's great
+		      </label>
+		    </div>
+		    <div class="form-check">
+		    <label class="form-check-label">
+		        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2">
+		        Option two can be something else and selecting it will deselect option one
+		      </label>
+		    </div>
+		    <div class="form-check disabled">
+		    <label class="form-check-label">
+		        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios3" value="option3" disabled>
+		        Option three is disabled
+		      </label>
+		    </div>
+		  </fieldset>
+
+	      <a class="btn btn-danger" href="{{ url_for('restaurants.index') }}">Back</a>
+	      <button type="submit" class="btn btn-success" href="{{ url_for('restaurants.create') }}">
+	      	Submit
+	      </button>
+
+		</form>
+
+
+
+
+	</div>
+
+{% endblock %}
