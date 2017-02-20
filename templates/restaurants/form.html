@@ -1,0 +1,31 @@
+{% extends "layouts/main.html" %} 
+
+{% block content %}
+
+	<div class="container main-container">
+		<form action="{{ url_for('restaurants.create') if restaurant == None }}" method="post">
+
+			<fieldset class="form-group">
+				<legend>Restorant information</legend>
+				<hr>
+				<div class="form-group">
+					<label for="restorantName">Name</label>
+					<input type="text" class="form-control" id="restorantName" name="name" placeholder="Someting like McDonald's" value="{{ restaurant.name if restaurant != None }}">
+				</div>
+				<div class="form-group">
+					<label for="restorantUrl">Image Url</label>
+					<input type="url" class="form-control" id="restorantUrl" name="image" placeholder="https://c1.staticflickr.com/3/2923/14713909026_8a818d6c23_k.jpg" value="{{ restaurant.image if restaurant != None }}">
+				</div>
+				<div class="form-group">
+					<label for="restorantDescription">Description</label>
+					<textarea class="form-control" id="restorantDescription" name="description" rows="3">{{ restaurant.description if restaurant != None }}</textarea>
+				</div>
+			</fieldset>
+
+			<a class="btn btn-danger" href="{{ url_for('restaurants.index') }}">Back</a>
+			<button type="submit" class="btn btn-success">Save</button>
+
+		</form>
+	</div>
+
+{% endblock %}

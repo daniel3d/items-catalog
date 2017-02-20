@@ -15,13 +15,9 @@
       </section>
       <br><br>
     {% else %}
-      <div class="task-bar container ">
-          <p class="text-muted float-xs-left">
-            They are curently<br>
-            10 Restorants and 120 items
-          </p>
-          <a class="btn btn-success float-xs-right" href="{{ url_for('restaurants.create') }}">
-            <i class="fa fa-plus"></i> New Resturant
+      <div class="task-bar container text-xs-center">
+          <a class="btn btn-secondary " href="{{ url_for('restaurants.create') }}">
+            <i class="fa fa-plus"></i> Add New Resturant
           </a>
       </div>
     {% endif %}
@@ -29,46 +25,31 @@
     <div class="album text-muted">
       <div class="container">
         <div class="row">
-          <div class="card">
-            <img src="http://placehold.it/356x280" alt="Card image cap">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          </div>
-          <div class="card">
-            <img src="http://placehold.it/356x280" alt="Card image cap">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          </div>
-          <div class="card">
-            <img src="http://placehold.it/356x280" alt="Card image cap">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          </div>
 
-          <div class="card">
-            <img src="http://placehold.it/356x280" alt="Card image cap">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          </div>
-          <div class="card">
-            <img src="http://placehold.it/356x280" alt="Card image cap">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          </div>
-          <div class="card">
-            <img src="http://placehold.it/356x280" alt="Card image cap">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          </div>
+          {% for restaurant in restaurants %}
+            <div class="card">
 
-          <div class="card">
-            <img src="http://placehold.it/356x280" alt="Card image cap">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          </div>
-          <div class="card">
-            <img src="http://placehold.it/356x280" alt="Card image cap">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          </div>
-          <div class="card">
-            <img src="http://placehold.it/356x280" alt="Card image cap">
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-          </div>
+              {% if g.user %}
+                <div class="dropdown show">
+                  <a class="btn btn-danger btn-sm dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Actions
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" href="{{ url_for('restaurants.edit', restaurant=restaurant.id) }}">Edit</a>
+                    <a class="dropdown-item" href="{{ url_for('restaurants.delete', restaurant=restaurant.id) }}">Delete</a>
+                  </div>
+                </div>
+              {% endif %}
+
+              <a href="{{ url_for('restaurants.menu', restaurant=restaurant.id) }}" class="resturant">
+                <div class="card-image" style="background-image: url({{ restaurant.image }});"></div>
+                <h4>{{ restaurant.name | title }}</h4>
+                <p class="card-text">{{ restaurant.description | truncate(220, '...') }}</p>
+              </a>
+            </div>
+          {% endfor %}
+
         </div>
-
       </div>
     </div>
 {% endblock %}
