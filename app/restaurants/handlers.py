@@ -1,7 +1,7 @@
 from sqlalchemy import desc
 from app.database import db
 from app.auth.models import User
-from app.restaurants.models import Restaurant
+from app.restaurants.models import Restaurant, MenuItem, menu_cources
 from app.auth.decorators import requires_login
 from flask import Blueprint, g, render_template, current_app, request, flash, \
     url_for, redirect, session
@@ -23,18 +23,22 @@ def index():
 	return render_template('restaurants.html', restaurants=restaurants)
 
 
-@restaurants.route('/restaurants/<int:restaurant>/')
-@restaurants.route('/restaurants/<int:restaurant>/menu')
-def menu(restaurant):
-	#show full list of restaurants.
-	restaurant = db.session.query(Restaurant).get(restaurant)
-	return render_template('restaurants/menu.html', restaurant=restaurant)
+@restaurants.route('/restaurants/<int:id>/')
+@restaurants.route('/restaurants/<int:id>/menu')
+def menu(id):
+	menu = []
+	restaurant = db.session.query(Restaurant).get(id)
+	items = db.session.query(MenuItem).filter_by(restaurant_id=restaurant.id).all()
+	for cource in menu_cources:
+		menu.append({'name': cource['name'], 
+			'items': [item for item in items if item.course == cource['id']]})
+	return render_template('restaurants/menu.html', menu=menu, restaurant=restaurant)
 
 
-@restaurants.route('/restaurants/<int:restaurant>/edit', methods=['GET', 'POST'])
-def edit(restaurant):
+@restaurants.route('/restaurants/<int:id>/edit', methods=['GET', 'POST'])
+def edit(id):
 	#show full list of restaurants.
-	restaurant = db.session.query(Restaurant).get(restaurant)
+	restaurant = db.session.query(Restaurant).get(id)
 	old_name = restaurant.name
 	if request.method == 'POST':
 		restaurant.name = request.form['name']
@@ -47,10 +51,10 @@ def edit(restaurant):
 		return render_template('restaurants/form.html', restaurant=restaurant)
 
 
-@restaurants.route('/restaurants/<int:restaurant>/delete')
-def delete(restaurant):
+@restaurants.route('/restaurants/<int:id>/delete')
+def delete(id):
 	#show full list of restaurants.
-	restaurant = db.session.query(Restaurant).get(restaurant)
+	restaurant = db.session.query(Restaurant).get(id)
 	flash('Restaurant %s was deleted!' % restaurant.name, 'alert-danger')
 	db.session.delete(restaurant)
 	db.session.commit()

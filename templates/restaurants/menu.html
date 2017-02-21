@@ -14,9 +14,55 @@
       <div class="container">
         <div class="row">
 
-          {{ restaurant.name }}
+          <div class="menu">
+            {% for cource in menu %}
+              {% if cource['items'] %}
+                <div class="menu-cource">
+                  <h4>{{ cource['name'] | title }}</h4><hr>
+                  {% for item in cource['items'] %}
+                    <div class="menu-item">
+                      <div class="menu-item-title">
+                        <b>{{ item.name | title }}</b>
+                        <div class="float-md-right">${{ item.price }}
+                        {% if g.user %}
+                          <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalLong" style="margin-left: 15px;">Edit</a>
+                          <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                        {% endif %}
+                        </div>
+                      </div>
+                      {% if item.description %}
+                        <div class="menu-item-description">{{ item.description }}</div>
+                      {% endif %}
+                    </div>
+                  {% endfor %}
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
 
         </div>
       </div>
     </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

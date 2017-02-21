@@ -14,17 +14,17 @@
         </div>
       </section>
       <br><br>
-    {% else %}
-      <div class="task-bar container text-xs-center">
-          <a class="btn btn-secondary " href="{{ url_for('restaurants.create') }}">
-            <i class="fa fa-plus"></i> Add New Resturant
-          </a>
-      </div>
     {% endif %}
 
     <div class="album text-muted">
       <div class="container">
         <div class="row">
+
+          {% if g.user %}
+            <div class="card add-new">
+              <a href="{{ url_for('restaurants.create') }}"></a>
+            </div>
+          {% endif %}
 
           {% for restaurant in restaurants %}
             <div class="card">
@@ -35,13 +35,13 @@
                     Actions
                   </a>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="{{ url_for('restaurants.edit', restaurant=restaurant.id) }}">Edit</a>
-                    <a class="dropdown-item" href="{{ url_for('restaurants.delete', restaurant=restaurant.id) }}">Delete</a>
+                    <a class="dropdown-item" href="{{ url_for('restaurants.edit', id=restaurant.id) }}">Edit</a>
+                    <a class="dropdown-item" href="{{ url_for('restaurants.delete', id=restaurant.id) }}">Delete</a>
                   </div>
                 </div>
               {% endif %}
 
-              <a href="{{ url_for('restaurants.menu', restaurant=restaurant.id) }}" class="resturant">
+              <a href="{{ url_for('restaurants.menu', id=restaurant.id) }}" class="resturant">
                 <div class="card-image" style="background-image: url({{ restaurant.image }});"></div>
                 <h4>{{ restaurant.name | title }}</h4>
                 <p class="card-text">{{ restaurant.description | truncate(220, '...') }}</p>
