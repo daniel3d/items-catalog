@@ -9,7 +9,9 @@
           <p class="lead">Create your own resturants and menus or browse 1000+ of them.
           <br>Sing up and start generating content and dont forget make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>
           <p>
-            <a href="{{ url_for('auth.signup') }}" class="btn btn-lg single btn-outline-success">Sign up</a>
+            <a href="{{ url_for('auth.signup') }}" class="btn btn-lg single btn-outline-success">
+              Sign up
+            </a>
           </p>
         </div>
       </section>
@@ -31,12 +33,26 @@
 
               {% if g.user %}
                 <div class="dropdown show">
-                  <a class="btn btn-danger btn-sm dropdown-toggle" href="https://example.com" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <a class="btn btn-danger btn-sm dropdown-toggle" 
+                  href="#/actions" 
+                  id="dropdownMenuLink" 
+                  data-toggle="dropdown" 
+                  aria-haspopup="true" 
+                  aria-expanded="false">
                     Actions
                   </a>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="{{ url_for('restaurants.edit', id=restaurant.id) }}">Edit</a>
-                    <a class="dropdown-item" href="{{ url_for('restaurants.delete', id=restaurant.id) }}">Delete</a>
+                    <a class="dropdown-item" 
+                    href="{{ url_for('restaurants.edit', id=restaurant.id) }}">
+                      Edit
+                    </a>
+                    <a class="dropdown-item delete" 
+                    data-toggle="modal" 
+                    data-target="#deleteModal" href="#/{{ restaurant.id }}/delete" 
+                    data-action="{{ url_for('restaurants.delete', id=restaurant.id) }}"
+                    data-element='Resturant "{{ restaurant.name | title }}"'>
+                      Delete
+                    </a>
                   </div>
                 </div>
               {% endif %}

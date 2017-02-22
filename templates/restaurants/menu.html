@@ -2,7 +2,8 @@
 
 {% block content %}
     
-    <section class="jumbotron text-xs-center main-background" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url({{ restaurant.image }});">
+    <section class="jumbotron text-xs-center main-background" 
+    style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url({{ restaurant.image }});">
       <div class="container">
         <h1 class="jumbotron-heading">{{ restaurant.name | title }}</h1>
         <p class="lead">{{ restaurant.description | truncate(220, '...') }}</p>
@@ -16,18 +17,46 @@
 
           <div class="menu">
             {% for cource in menu %}
-              {% if cource['items'] %}
-                <div class="menu-cource">
-                  <h4>{{ cource['name'] | title }}</h4><hr>
+              {% if cource['items'] or g.user %}
+                <div class="menu-cource" data-id="{{ cource['id'] }}">
+                  <h4>{{ cource['name'] | title }}
+                    {% if g.user %}
+                      <a class="add-edit-menu-item float-xs-right" 
+                      data-toggle="modal" 
+                      data-target="#addEditMenuItem" href="#/item/create"
+                      data-title="<b>{{ cource['name'] }}</b> - new menu item"
+                      data-action="{{ url_for('restaurants.create_menu_item', id=restaurant.id) }}">
+                        <i class="fa fa-plus" aria-hidden="true"></i>
+                      </a>
+                    {% endif %}
+                  </h4><hr>
                   {% for item in cource['items'] %}
-                    <div class="menu-item">
+                    <div class="menu-item"
+                    data-name="{{ item.name | title }}"
+                    data-price="{{ item.price }}"
+                    data-description="{{ item.description }}">
                       <div class="menu-item-title">
                         <b>{{ item.name | title }}</b>
                         <div class="float-md-right">${{ item.price }}
+
                         {% if g.user %}
-                          <a href="#" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#exampleModalLong" style="margin-left: 15px;">Edit</a>
-                          <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                          <a class="add-edit-menu-item btn btn-primary btn-sm" 
+                          data-toggle="modal" 
+                          data-target="#addEditMenuItem" href="#/item/{{ item.id }}/edit"
+                          data-title="<b>{{ cource['name'] }}</b> - update menu item"
+                          data-action="{{ url_for('restaurants.edit_menu_item', id=item.id) }}"
+                          style="margin-left: 15px;">
+                            Edit
+                          </a>
+                          <a class="delete btn btn-danger btn-sm" 
+                          data-toggle="modal" 
+                          data-target="#deleteModal" href="#/item/{{ item.id }}/delete" 
+                          data-action="{{ url_for('restaurants.delete_menu_item', id=item.id) }}" 
+                          data-element='{{ cource["name"] }} - menu item "{{ item.name | title }}"'>
+                            Delete
+                          </a>
                         {% endif %}
+
                         </div>
                       </div>
                       {% if item.description %}
@@ -43,26 +72,68 @@
         </div>
       </div>
     </div>
+{% endblock %}
 
+{% block before_body_end %}
+  {% if g.user %}
+    <!-- Modal -->
+    <div class="modal fade" id="addEditMenuItem" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <form action="" method="post" class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+            <div class="form-group">
+              <label for="restorantName">Name</label>
+              <input type="text" class="form-control" id="restorantName" name="name" required>
+            </div>
+            <div class="form-group">
+              <label for="restorantUrl">Price</label>
+              <input type="number" step=".01" class="form-control" id="restorantUrl" name="price" required>
+            </div>
+            <div class="form-group">
+              <label for="restorantDescription">Description</label>
+              <textarea class="form-control" id="restorantDescription" name="description" rows="3"></textarea>
+            </div>
+
+            <input type="hidden" name="course_id">
+            <input type="hidden" name="restaurant_id" value="{{ restaurant.id }}">
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Save changes</button>
+          </div>
+        </form>
       </div>
     </div>
-  </div>
-</div>
+
+    <script>
+      // Delete modal functionality
+      $(document).on('click', '.add-edit-menu-item', function (event) {
+          event.preventDefault();
+          var modal = $("#addEditMenuItem");
+          var item = $(this).parents('.menu-item').data();
+          var cource = $(this).closest('.menu-cource').data();
+          modal.find('form').attr("action", $(this).data('action'));
+          modal.find('.modal-title').html($(this).data('title'));
+          modal.find('input[name="course_id"]').attr('value', cource.id);
+
+          if(item) {
+            modal.find('input[name="name"]').attr('value', item.name);
+            modal.find('input[name="price"]').attr('value', item.price);
+            modal.find('textarea[name="description"]').html(item.description);
+          } else {
+            modal.find('input[name="name"]').attr('value', '');
+            modal.find('input[name="price"]').attr('value', '');
+            modal.find('textarea[name="description"]').html('');
+          }
+      });    
+    </script>
+  {% endif %}
 {% endblock %}
