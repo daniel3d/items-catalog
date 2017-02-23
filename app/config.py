@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+"""Default config file."""
+
 # Project details
 CREATOR = "Your name"
 PROJECT = "Your project name"
@@ -17,12 +20,12 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 # Oauth credentials
 OAUTH_CREDENTIALS = {
-	'facebook': {
-		'id': '',
-		'secret': ''
-	},
-	'twitter': {
-		'id': '',
-		'secret': ''
-	}
+    'facebook': {
+        'id': '',
+        'secret': ''
+    },
+    'twitter': {
+        'id': '',
+        'secret': ''
+    }
 }

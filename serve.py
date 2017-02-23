@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+"""The entry point of the application."""
+
 from app import create_app, config
 
 # Project information
@@ -15,14 +18,14 @@ config.SECRET_KEY = "base64:VWRhY2l0eSBGdWxsIFN0YWNrIFdlYiBEZXZlbG9wZXIgTmFub2Rl
 
 # Set the oauth credentials.
 config.OAUTH_CREDENTIALS = {
-	'facebook': {
-		'id': '355967214785654',
-		'secret': 'b82dd562d20668c95dc822ce6a1b55d6'
-	},
-	'twitter': {
-		'id': '',
-		'secret': ''
-	}
+    'facebook': {
+        'id': '355967214785654',
+        'secret': 'b82dd562d20668c95dc822ce6a1b55d6'
+    },
+    'twitter': {
+        'id': '',
+        'secret': ''
+    }
 }
 
 if __name__ == '__main__':

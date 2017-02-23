@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+"""Auth handlers."""
+
 from app.oauth import OAuthSignIn
 from app.database import db
 from app.login_manager import login_manager
@@ -13,13 +16,17 @@ auth = Blueprint('auth', __name__, url_prefix='/auth')
 
 login_manager.view = 'auth.login'
 
+
 @login_manager.user_loader
 def load_user(user_id):
+    """Load user by id."""
     return User.query.get(int(user_id))
+
 
 @auth.route('/me/')
 @requires_login
 def home():
+    """User homepage TODO."""
     return render_template("auth/profile.html", user=g.user)
 
 
@@ -68,10 +75,10 @@ def signup():
         db.session.add(user)
         db.session.commit()
         # Log the user in, as he now has an id
-        
+
         load_user(user.id)
         #session['user_id'] = user.id
-        
+
         # flash will display a message to the user
         flash('Thanks you for registering %s!' % user.name, 'alert-success')
         # redirect user to the 'home' method of the user module.
@@ -88,13 +95,16 @@ def logout():
 
 @auth.route('/<provider>')
 def oauth_authorize(provider):
+    """Authorize with by given provide."""
     if not current_user.is_anonymous:
         return redirect(url_for('index'))
     oauth = OAuthSignIn.get_provider(provider)
     return oauth.authorize()
 
+
 @auth.route('/callback/<provider>')
 def oauth_callback(provider):
+    """Callback for the oauth provides."""
     if not current_user.is_anonymous:
         return redirect(url_for('index'))
     oauth = OAuthSignIn.get_provider(provider)
@@ -102,7 +112,7 @@ def oauth_callback(provider):
     if social_id is None:
         flash('Authentication failed.', 'alert-danger')
         return redirect(url_for('index'))
-    
+
     user = User.query.filter_by(email=email).first()
     if user and not user.social_id:
         user.social_id = social_id
@@ -115,7 +125,7 @@ def oauth_callback(provider):
             user = User(social_id=social_id, username=username, email=email)
             db.session.add(user)
             db.session.commit()
-    
+
     login_user(user, True)
     flash('Welcome %s!' % username, 'alert-success')
     return redirect(url_for('restaurants.index'))

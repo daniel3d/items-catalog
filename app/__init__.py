@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+"""Item catalog application."""
+
 import os
 import sys
 import inspect
@@ -5,6 +8,7 @@ import inspect
 from app.database import db
 from app.login_manager import login_manager
 from flask import Flask, Blueprint
+
 
 def log(message):
     """Use logger so we don't print multiple times when reload is on."""
@@ -14,7 +18,6 @@ def log(message):
 
 def create_app(default_config=None, default_blueprints=None):
     """Create a Flask app."""
-
     def configure_app():
         """Set up the app."""
         app.version = default_config.VERSION

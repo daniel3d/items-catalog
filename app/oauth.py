@@ -1,28 +1,38 @@
+# -*- coding: utf-8 -*-
+"""Oauth providers setup."""
+
 from rauth import OAuth1Service, OAuth2Service
 from flask import current_app, url_for, request, redirect, session
 
 
 class OAuthSignIn(object):
+    """Oauth sign in."""
+
     providers = None
 
     def __init__(self, provider_name):
+        """Default init."""
         self.provider_name = provider_name
         credentials = current_app.config['OAUTH_CREDENTIALS'][provider_name]
         self.consumer_id = credentials['id']
         self.consumer_secret = credentials['secret']
 
     def authorize(self):
+        """Default authorize."""
         pass
 
     def callback(self):
+        """Default callback."""
         pass
 
     def get_callback_url(self):
+        """Generate provider callback url."""
         return url_for('auth.oauth_callback', provider=self.provider_name,
                        _external=True)
 
     @classmethod
     def get_provider(self, provider_name):
+        """Get provider by name."""
         if self.providers is None:
             self.providers = {}
             for provider_class in self.__subclasses__():
@@ -32,7 +42,10 @@ class OAuthSignIn(object):
 
 
 class FacebookSignIn(OAuthSignIn):
+    """Facebook oauth provider."""
+
     def __init__(self):
+        """Facebook init provider."""
         super(FacebookSignIn, self).__init__('facebook')
         self.service = OAuth2Service(
             name='facebook',
@@ -44,6 +57,7 @@ class FacebookSignIn(OAuthSignIn):
         )
 
     def authorize(self):
+        """Authorize Facebook provider."""
         return redirect(self.service.get_authorize_url(
             scope='email',
             response_type='code',
@@ -51,6 +65,7 @@ class FacebookSignIn(OAuthSignIn):
         )
 
     def callback(self):
+        """Handle Facebook callback."""
         if 'code' not in request.args:
             return None, None, None
         oauth_session = self.service.get_auth_session(
@@ -69,7 +84,10 @@ class FacebookSignIn(OAuthSignIn):
 
 
 class TwitterSignIn(OAuthSignIn):
+    """Twitter oauth provider."""
+
     def __init__(self):
+        """Twitter init provider."""
         super(TwitterSignIn, self).__init__('twitter')
         self.service = OAuth1Service(
             name='twitter',
@@ -82,6 +100,7 @@ class TwitterSignIn(OAuthSignIn):
         )
 
     def authorize(self):
+        """Authorize Twitter provider."""
         request_token = self.service.get_request_token(
             params={'oauth_callback': self.get_callback_url()}
         )
@@ -89,6 +108,7 @@ class TwitterSignIn(OAuthSignIn):
         return redirect(self.service.get_authorize_url(request_token[0]))
 
     def callback(self):
+        """Handle Twitter callback."""
         request_token = session.pop('request_token')
         if 'oauth_verifier' not in request.args:
             return None, None, None
