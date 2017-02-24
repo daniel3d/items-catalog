@@ -127,6 +127,10 @@ footer .logo {
 
 /* General 
 *******************************************************************************/
+.small, small {
+    font-size: 60%;
+}
+
 .main-container{
   margin-bottom: 25px;
   padding-top: 25px;

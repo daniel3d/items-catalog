@@ -97,7 +97,7 @@ def logout():
 def oauth_authorize(provider):
     """Authorize with by given provide."""
     if not current_user.is_anonymous:
-        return redirect(url_for('index'))
+        return redirect(url_for('restaurants.index'))
     oauth = OAuthSignIn.get_provider(provider)
     return oauth.authorize()
 
@@ -106,12 +106,12 @@ def oauth_authorize(provider):
 def oauth_callback(provider):
     """Callback for the oauth provides."""
     if not current_user.is_anonymous:
-        return redirect(url_for('index'))
+        return redirect(url_for('restaurants.index'))
     oauth = OAuthSignIn.get_provider(provider)
     social_id, username, email = oauth.callback()
     if social_id is None:
         flash('Authentication failed.', 'alert-danger')
-        return redirect(url_for('index'))
+        return redirect(url_for('restaurants.index'))
 
     user = User.query.filter_by(email=email).first()
     if user and not user.social_id:

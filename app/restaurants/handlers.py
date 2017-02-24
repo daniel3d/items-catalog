@@ -5,7 +5,7 @@ from sqlalchemy import desc
 from app.database import db
 from app.auth.models import User
 from app.restaurants.models import Restaurant, MenuItem, menu_cources
-from app.auth.decorators import requires_login
+from app.auth.decorators import requires_login, check_authorization
 from flask import Blueprint, g, render_template, current_app, request, flash, \
     url_for, redirect, session
 
@@ -24,8 +24,12 @@ def before_request():
 @restaurants.route('/restaurants')
 def index():
     """Show all restaurants."""
-    restaurants = db.session.query(
-        Restaurant).order_by(desc(Restaurant.id)).all()
+    if g.user is None:
+        restaurants = db.session.query(
+            Restaurant).order_by(desc(Restaurant.id)).all()
+    else:
+        restaurants = db.session.query(Restaurant).filter_by(
+            user_id=g.user.id).order_by(desc(Restaurant.id)).all()
     return render_template('restaurants.html', restaurants=restaurants)
 
 
@@ -52,6 +56,7 @@ def create():
         restaurant.name = request.form['name']
         restaurant.image = request.form['image']
         restaurant.description = request.form['description']
+        restaurant.user_id = g.user.id
         db.session.add(restaurant)
         db.session.commit()
         flash('Restaurant <b>%s</b> was created!' %
@@ -66,6 +71,7 @@ def create():
 def edit(id):
     """Edit restaurant."""
     restaurant = db.session.query(Restaurant).get(id)
+    check_authorization(restaurant.user.id, 'edit')
     old_name = restaurant.name
     if request.method == 'POST':
         restaurant.name = request.form['name']
@@ -83,6 +89,7 @@ def edit(id):
 def delete(id):
     """Delete restaurant."""
     restaurant = db.session.query(Restaurant).get(id)
+    check_authorization(restaurant.user.id, 'delete')
     flash('Restaurant <b>%s</b> was deleted!' %
           restaurant.name, 'alert-warning')
     db.session.delete(restaurant)
@@ -94,12 +101,15 @@ def delete(id):
 @requires_login
 def create_menu_item(id):
     """Create menu item."""
+    restaurant = db.session.query(Restaurant).get(id)
+    check_authorization(restaurant.user.id, 'create item')
     item = MenuItem()
     item.name = request.form['name']
     item.price = request.form['price']
     item.course = request.form['course_id']
     item.description = request.form['description']
-    item.restaurant_id = request.form['restaurant_id']
+    item.restaurant_id = restaurant.id
+    item.user_id = restaurant.user.id
     db.session.add(item)
     db.session.commit()
     flash('Menu item <b>%s</b> was created!' % item.name, 'alert-success')
@@ -111,6 +121,7 @@ def create_menu_item(id):
 def edit_menu_item(id):
     """Edit menu item."""
     item = db.session.query(MenuItem).get(id)
+    check_authorization(item.user.id, 'edit')
     old_name = item.name
     item.name = request.form['name']
     item.price = request.form['price']
@@ -126,6 +137,7 @@ def edit_menu_item(id):
 def delete_menu_item(id):
     """Delete menu item."""
     item = db.session.query(MenuItem).get(id)
+    check_authorization(item.user.id, 'delete')
     restaurant = item.restaurant
     message = 'Menu item <b>%s</b> was deleted from restaurant <b>%s</b>!'
     flash(message % (item.name, restaurant.name), 'alert-warning')

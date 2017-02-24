@@ -24,3 +24,10 @@ def already_login(f):
             return redirect(url_for('restaurants.index'))
         return f(*args, **kwargs)
     return decorated_function
+
+
+def check_authorization(check_id, action):
+    """Check if user is authorized."""
+    if g.user.id != check_id:
+        flash(u'You dont have access to `%s` on this resource.' % action, 'alert-danger')
+        return redirect(url_for('restaurants.index'))

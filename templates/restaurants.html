@@ -59,7 +59,7 @@
 
               <a href="{{ url_for('restaurants.menu', id=restaurant.id) }}" class="resturant">
                 <div class="card-image" style="background-image: url({{ restaurant.image }});"></div>
-                <h4>{{ restaurant.name | title }}</h4>
+                <h4>{{ restaurant.name | title }} <small>added by: {{ restaurant.user.username }}</small></h4>
                 <p class="card-text">{{ restaurant.description | truncate(220, '...') }}</p>
               </a>
             </div>
