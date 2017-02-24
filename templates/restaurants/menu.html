@@ -20,7 +20,7 @@
               {% if cource['items'] or g.user %}
                 <div class="menu-cource" data-id="{{ cource['id'] }}">
                   <h4>{{ cource['name'] | title }}
-                    {% if g.user %}
+                    {% if g.user and g.user.id == restaurant.user.id %}
                       <a class="add-edit-menu-item float-xs-right" 
                       data-toggle="modal" 
                       data-target="#addEditMenuItem" href="#/item/create"
@@ -39,7 +39,7 @@
                         <b>{{ item.name | title }}</b>
                         <div class="float-md-right">${{ item.price }}
 
-                        {% if g.user %}
+                        {% if g.user and g.user.id == item.user.id %}
                           <a class="add-edit-menu-item btn btn-primary btn-sm" 
                           data-toggle="modal" 
                           data-target="#addEditMenuItem" href="#/item/{{ item.id }}/edit"

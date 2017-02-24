@@ -5,7 +5,7 @@ from functools import wraps
 from flask import g, flash, redirect, url_for, request
 
 
-def requires_login(f):
+def login_required(f):
     """Use to make sure login user is required."""
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -24,10 +24,3 @@ def already_login(f):
             return redirect(url_for('restaurants.index'))
         return f(*args, **kwargs)
     return decorated_function
-
-
-def check_authorization(check_id, action):
-    """Check if user is authorized."""
-    if g.user.id != check_id:
-        flash(u'You dont have access to `%s` on this resource.' % action, 'alert-danger')
-        return redirect(url_for('restaurants.index'))

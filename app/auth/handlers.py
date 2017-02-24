@@ -6,7 +6,7 @@ from app.database import db
 from app.login_manager import login_manager
 from app.auth.forms import RegisterForm, LoginForm
 from app.auth.models import User
-from app.auth.decorators import requires_login, already_login
+from app.auth.decorators import login_required, already_login
 from werkzeug import check_password_hash, generate_password_hash
 from flask_login import login_user, logout_user, current_user
 from flask import Blueprint, request, render_template, flash, g, session, \
@@ -24,7 +24,7 @@ def load_user(user_id):
 
 
 @auth.route('/me/')
-@requires_login
+@login_required
 def home():
     """User homepage TODO."""
     return render_template("auth/profile.html", user=g.user)
