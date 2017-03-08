@@ -2,6 +2,8 @@
 
 ## For Udacity Full Stack Web Developer Nanodegree
 
+[screenshot](https://c1.staticflickr.com/4/3920/33331018415_3c16c1f80f_h.jpg)
+
 #### Installation instructions
 
  * Install python requirments `pip install -t lib -r requirements.txt`
